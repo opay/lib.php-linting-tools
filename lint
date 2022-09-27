@@ -3,12 +3,12 @@
 if [ -z "$1" ]; then
 
     vendor/bin/php-cs-fixer fix . --dry-run --verbose
-    vendor/bin/phpcs -p --standard=OpaySniffs/ruleset.xml . --ignore=./vendor
+    vendor/bin/phpcs -p --standard=OpaySniffs . --ignore=./vendor
 
 elif [ "$1" == "fix" ]; then
 
     vendor/bin/php-cs-fixer fix . --verbose
-    vendor/bin/phpcbf -p --standard=OpaySniffs/ruleset.xml . --ignore=./vendor
+    vendor/bin/phpcbf -p --standard=OpaySniffs . --ignore=./vendor
 
 elif [ "$1" == "--custom" ] && [ -z "$2" ]; then
 
