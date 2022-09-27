@@ -5,7 +5,6 @@
     <file>../</file>
 
     <!-- Exclude directories and files by patterns -->
-    <exclude-pattern>./Examples/*.php$</exclude-pattern>
     <exclude-pattern>./vendor/*$</exclude-pattern>
 
     <!-- Path to custom ruleset -->

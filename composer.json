@@ -25,11 +25,6 @@
             "Opay\\PhpLintingTools\\": "OpaySniffs"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Opay\\PhpLintingTools\\Tests\\": "tests"
-        }
-    },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true

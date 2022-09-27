@@ -8,7 +8,6 @@ use PhpCsFixer\Finder;
 $finder = Finder::create()
     ->in(['.'])
     ->exclude([
-        'Examples',
         'vendor',
     ]);
 
