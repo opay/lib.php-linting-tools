@@ -1,19 +1,18 @@
-<img src="https://avatars.githubusercontent.com/u/24718711?s=128" alt="OPAY" style="width: 128px; height: 128px; float: left; margin: 15px 15px 15px 0;"/>
+<a href="https://www.opay.eu" target="_blank"><img src="https://avatars.githubusercontent.com/u/24718711?s=128" width="100" alt="OPAY"></a>
 
 PHP linting rules
 =============================
 
 This is PHP linting tools and rules set used by "OPAY solutions" developers to ensure we deliver maintainable and the highest quality code.
 
-The main point of this tools set is to ensure developers write [PSR compliant code](https://www.php-fig.org/psr/). Many [additional rules](./OpaySniffs/ruleset.xml) are added to increase code quality and readability. None of our code goes to production if at least one code style error or warning is discovered.
-<br clear="all"/>
+The main point of this tools set is to ensure developers write <a target="_blank" href="https://www.php-fig.org/psr/">PSR compliant code</a>. Many [additional rules](./OpaySniffs/ruleset.xml) are added to increase code quality and readability. None of our code goes to production if at least one code style error or warning is discovered.
 
 Package content
 ---------------
-- [friendsofphp/php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) - Powerful PHP Coding Standards tool
-- [squizlabs/php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) - Another powerful and customizable PHP Coding Standards tool
-- [slevomat/coding-standard](https://github.com/slevomat/coding-standard) - Set of additional linting rules for PHP CodeSniffer
-- [moxio/php-codesniffer-sniffs](https://github.com/Moxio/php-codesniffer-sniffs) - Set of additional linting rules for PHP CodeSniffer
+- <a target="_blank" href="https://github.com/FriendsOfPHP/PHP-CS-Fixer">friendsofphp/php-cs-fixer</a> - Powerful PHP Coding Standards tool
+- <a target="_blank" href="https://github.com/squizlabs/PHP_CodeSniffer">squizlabs/php_codesniffer</a> - Another powerful and customizable PHP Coding Standards tool
+- <a target="_blank" href="https://github.com/slevomat/coding-standard">slevomat/coding-standard</a> - Set of additional linting rules for PHP CodeSniffer
+- <a target="_blank" href="https://github.com/Moxio/php-codesniffer-sniffs">moxio/php-codesniffer-sniffs</a> - Set of additional linting rules for PHP CodeSniffer
 - Custom Opay linting rules for PHP CodeSniffer
 
 `PHP-CS-Fixer` and `PHP_CodeSniffer` are both PHP code linting tools that complement each other allowing developers to write the highest quality code.
