@@ -24,6 +24,16 @@
             "Opay\\PhpLintingTools\\": "OpaySniffs"
         }
     },
+    "scripts": {
+        "lint": [
+            "vendor/bin/php-cs-fixer fix . --dry-run --verbose",
+            "vendor/bin/phpcs -p --standard=OpaySniffs . --ignore=./vendor"
+        ],
+        "lint:fix": [
+            "vendor/bin/php-cs-fixer fix . --verbose",
+            "vendor/bin/phpcbf -p --standard=OpaySniffs . --ignore=./vendor"
+        ]
+    },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
