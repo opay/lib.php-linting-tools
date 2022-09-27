@@ -21,6 +21,7 @@ class NonExistingUsesSniff implements Sniff
         return [T_OPEN_TAG];
     }
 
+    // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
     public function process(File $phpcsFile, $stackPtr): void
     {
         $statementsList = UseStatementHelper::getFileUseStatements($phpcsFile);
