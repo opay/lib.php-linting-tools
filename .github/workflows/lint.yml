@@ -40,4 +40,4 @@ jobs:
         run: vendor/bin/php-cs-fixer fix . --dry-run --verbose
 
       - name: Run phpcs
-        run: vendor/bin/phpcs -p --standard=OpaySniffs/ruleset.xml .
+        run: vendor/bin/phpcs -p --standard=OpaySniffs/ruleset.xml . --ignore=./vendor
