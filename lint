@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+
+    vendor/bin/php-cs-fixer fix . --dry-run --verbose
+    vendor/bin/phpcs -p --standard=OpaySniffs/ruleset.xml . --ignore=./vendor
+
+elif [ "$1" == "fix" ]; then
+
+    vendor/bin/php-cs-fixer fix . --verbose
+    vendor/bin/phpcbf -p --standard=OpaySniffs/ruleset.xml . --ignore=./vendor
+
+elif [ "$1" == "--custom" ] && [ -z "$2" ]; then
+
+    vendor/bin/php-cs-fixer fix --config="Examples/custom_phpcsfixer_config.php" --dry-run --verbose
+    vendor/bin/phpcs -p --standard="Examples/custom_phpcs_config.xml"
+
+elif [ "$1" == "--custom" ] && [ "$2" == "fix" ]; then
+
+    vendor/bin/php-cs-fixer fix --config="Examples/custom_phpcsfixer_config.php" --verbose
+    vendor/bin/phpcbf -p --standard="Examples/custom_phpcs_config.xml"
+
+else
+
+    echo -e "\e[32mlint\e[0m                    scan OpaySniffs directory"
+    echo -e "\e[32mlint fix\e[0m                scan and OpaySniffs directory"
+    echo -e "\e[32mlint --custom\e[0m           scan OpaySniffs directory using custom configuration files"
+    echo -e "\e[32mlint --custom fix\e[0m       scan and fix OpaySniffs directory using custom configuration files"
+
+fi;
