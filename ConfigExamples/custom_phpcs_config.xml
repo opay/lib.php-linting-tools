@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset>
+    <description>Custom ruleset example</description>
+    <arg name="basepath" value="./"/>
+    <file>../</file>
+
+    <!-- Exclude directories and files by patterns -->
+    <exclude-pattern>./vendor/*$</exclude-pattern>
+
+    <!-- Path to custom ruleset -->
+    <rule ref="OpaySniffs/ruleset.xml"/>
+
+    <!-- Rule override -->
+    <rule ref="SlevomatCodingStandard.Functions.StaticClosure">
+        <exclude-pattern>*Database/Factory/*$</exclude-pattern>
+    </rule>
+</ruleset>
