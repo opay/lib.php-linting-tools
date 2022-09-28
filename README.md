@@ -43,7 +43,7 @@ Setup custom config and run tools to fix your files automatically:
 vendor/bin/php-cs-fixer fix --config="ConfigExamples/custom_phpcsfixer_config.php" --verbose
 vendor/bin/phpcbf --standard="ConfigExamples/custom_phpcs_config.xml"
 ```
-Configure [bash script](./lint) or add script to `compsoer.json` and run it with single command `composer lint`:
+Configure [bash script](./lint) or add script to `composer.json` and run it with single command `composer lint`:
 ```json
 {
     "lint": [
