@@ -14,6 +14,7 @@ class NonExistingUsesSniff implements Sniff
     public array $ignoreGlobalNamespaces = [
         'OpenApi',
         'JetBrains',
+        'Klix',
     ];
 
     public function register(): array
