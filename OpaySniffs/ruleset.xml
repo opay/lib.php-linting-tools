@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="Opay custom ruleset" namespace="Opay\PhpLintingTools">
-    <description>Custom ruleset for Plain PHP projects</description>
+<ruleset name="OpaySniffs" namespace="Opay\OpaySniffs">
+    <description>OPAY custom rules</description>
     <arg name="tab-width" value="4"/>
     <rule ref="PSR12"/>
     <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
@@ -182,5 +182,4 @@
     <rule ref="MoxioSniffs.PHP.DisallowMbDetectEncoding"/>
     <rule ref="MoxioSniffs.PHP.DisallowUniqidWithoutMoreEntropy"/>
     <rule ref="MoxioSniffs.PHP.DisallowUtf8EncodeDecode"/>
-    <rule ref="OpaySniffs.Classes.NonExistingUses"/>
 </ruleset>
