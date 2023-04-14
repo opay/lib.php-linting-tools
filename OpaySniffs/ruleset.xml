@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="Opay custom ruleset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/squizlabs/php_codesniffer/phpcs.xsd">
-    <description>Custom ruleset for Plain PHP projects</description>
+<ruleset name="OpaySniffs" namespace="Opay\OpaySniffs">
+    <description>OPAY custom rules</description>
     <arg name="tab-width" value="4"/>
     <rule ref="PSR12"/>
     <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
@@ -60,7 +60,6 @@
                 <element key="sizeof" value="count"/>
                 <element key="print" value="echo"/>
                 <!-- Disallow some Laravel functions -->
-                <element key="collect" value="plain functions of array"/>
                 <element key="throw_if" value="if(...) -> throw new"/>
                 <element key="throw_unless" value="if(...) -> throw new"/>
             </property>
@@ -182,5 +181,4 @@
     <rule ref="MoxioSniffs.PHP.DisallowMbDetectEncoding"/>
     <rule ref="MoxioSniffs.PHP.DisallowUniqidWithoutMoreEntropy"/>
     <rule ref="MoxioSniffs.PHP.DisallowUtf8EncodeDecode"/>
-    <rule ref="OpaySniffs.Classes.NonExistingUses"/>
 </ruleset>

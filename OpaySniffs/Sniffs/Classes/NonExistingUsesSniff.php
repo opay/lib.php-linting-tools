@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Opay\PhpLintingTools\Sniffs\Classes;
+namespace Opay\OpaySniffs\Sniffs\Classes;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
@@ -14,7 +14,6 @@ class NonExistingUsesSniff implements Sniff
     public array $ignoreGlobalNamespaces = [
         'OpenApi',
         'JetBrains',
-        'Klix',
     ];
 
     public function register(): array
@@ -52,6 +51,10 @@ class NonExistingUsesSniff implements Sniff
             return true;
         }
 
-        return class_exists($namespace) || interface_exists($namespace) || trait_exists($namespace);
+        return class_exists($namespace)
+            || interface_exists($namespace)
+            || trait_exists($namespace)
+            || enum_exists($namespace)
+        ;
     }
 }

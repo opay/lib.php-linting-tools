@@ -1,9 +1,9 @@
 {
     "name": "opay-dev/php-linting-tools",
-    "type": "library",
+    "type": "phpcodesniffer-standard",
     "description": "PHP linting rules set used by Opay developers",
     "license": "MIT",
-    "keywords": ["lint", "linting", "psr", "phpcs", "php-cs", "codesniffer", "coding-standard"],
+    "keywords" : ["phpcs", "PHP_CodeSniffer", "sniffs", "standards", "lint", "linting", "psr"],
     "authors": [{
         "name": "UAB OPAY Solutions",
         "email": "info+developers@opay.eu",
@@ -11,9 +11,9 @@
         "role": "Development team"
     }],
     "require": {
-        "friendsofphp/php-cs-fixer": "^3.11",
+        "friendsofphp/php-cs-fixer": "^3.16",
         "moxio/php-codesniffer-sniffs": "^2.5",
-        "slevomat/coding-standard": "^8.1",
+        "slevomat/coding-standard": "^8.8",
         "squizlabs/php_codesniffer": "^3.7"
     },
     "require-dev": {
@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Opay\\PhpLintingTools\\": "OpaySniffs"
+            "Opay\\OpaySniffs\\": "OpaySniffs"
         }
     },
     "scripts": {

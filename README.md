@@ -26,29 +26,29 @@ $ composer require --dev opay-dev/php-linting-tools
 Run tools to validate your files:
 ```
 vendor/bin/php-cs-fixer fix path/to/files --dry-run --verbose
-vendor/bin/phpcs --standard=vendor/opay-dev/php-linting-tools/OpaySniffs path/to/files
+vendor/bin/phpcs -p --standard=OpaySniffs path/to/files
 ```
 Run tools to fix your files automatically _(not all files can be fixed, some may require manual fixing)_:
 ```
 vendor/bin/php-cs-fixer fix path/to/files --verbose
-vendor/bin/phpcbf --standard=vendor/opay-dev/php-linting-tools/OpaySniffs path/to/files
+vendor/bin/phpcbf -p --standard=OpaySniffs path/to/files
 ```
 Setup custom config and run tools to validate your files:
 ```
 vendor/bin/php-cs-fixer fix --config="ConfigExamples/custom_phpcsfixer_config.php" --dry-run --verbose
-vendor/bin/phpcs --standard="ConfigExamples/custom_phpcs_config.xml"
+vendor/bin/phpcs -p --standard="ConfigExamples/custom_phpcs_config.xml"
 ```
 Setup custom config and run tools to fix your files automatically:
 ```
 vendor/bin/php-cs-fixer fix --config="ConfigExamples/custom_phpcsfixer_config.php" --verbose
-vendor/bin/phpcbf --standard="ConfigExamples/custom_phpcs_config.xml"
+vendor/bin/phpcbf -p --standard="ConfigExamples/custom_phpcs_config.xml"
 ```
 Configure [bash script](./lint) or add script to `composer.json` and run it with single command `composer lint`:
 ```json
 {
     "lint": [
         "vendor/bin/php-cs-fixer fix path/to/files --dry-run --verbose",
-        "vendor/bin/phpcs --standard=vendor/opay-dev/php-linting-tools/OpaySniffs path/to/files"
+        "vendor/bin/phpcs -p --standard=OpaySniffs path/to/files"
     ]
 }
 ```
