@@ -13,7 +13,7 @@ class RedundantEmptyLinesSniff implements Sniff
 
     public function register(): array
     {
-        return [T_WHITESPACE];
+        return [T_OPEN_TAG];
     }
 
     // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
