@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="Opay custom ruleset" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/squizlabs/php_codesniffer/phpcs.xsd">
+<ruleset name="Opay custom ruleset" namespace="Opay\PhpLintingTools">
     <description>Custom ruleset for Plain PHP projects</description>
     <arg name="tab-width" value="4"/>
     <rule ref="PSR12"/>

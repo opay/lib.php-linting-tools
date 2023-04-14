@@ -52,6 +52,10 @@ class NonExistingUsesSniff implements Sniff
             return true;
         }
 
-        return class_exists($namespace) || interface_exists($namespace) || trait_exists($namespace);
+        return class_exists($namespace)
+            || interface_exists($namespace)
+            || trait_exists($namespace)
+            || enum_exists($namespace)
+        ;
     }
 }
