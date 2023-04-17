@@ -11,6 +11,7 @@
         "role": "Development team"
     }],
     "require": {
+        "php": "^8.0",
         "friendsofphp/php-cs-fixer": "^3.16",
         "moxio/php-codesniffer-sniffs": "^2.5",
         "slevomat/coding-standard": "^8.8",
