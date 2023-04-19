@@ -26,6 +26,10 @@ class RedundantEmptyLinesSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         foreach ($tokens as $key => $token) {
             $line = $token['line'] - 1;
+            if (array_key_exists($line, $file) === false) {
+                continue;
+            }
+
             $content = trim($file[$line]);
 
             if ($lastLineContent === null) {
