@@ -230,7 +230,7 @@ class ForbiddenClassesSniff implements Sniff
         return $forbiddenClasses;
     }
 
-    private static function normalizeClassName(?string $typeName): ?string
+    private static function normalizeClassName(string|null $typeName): string|null
     {
         if (empty($typeName) === true || strtolower($typeName) === 'null') {
             return null;
