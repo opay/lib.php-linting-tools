@@ -2,6 +2,12 @@
 <ruleset name="OpaySniffs" namespace="Opay\OpaySniffs">
     <description>OPAY custom rules</description>
     <arg name="tab-width" value="4"/>
+
+    <!-- Disable until readonly class declaration throws error -->
+    <rule ref="PSR1">
+        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
+    </rule>
+
     <rule ref="PSR12"/>
     <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
     <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
