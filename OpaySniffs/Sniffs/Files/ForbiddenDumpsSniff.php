@@ -30,29 +30,12 @@ class ForbiddenDumpsSniff implements Sniff
             return;
         }
 
-        $endOfMethod = $phpcsFile->findNext(T_SEMICOLON, $stackPtr);
         $error = 'Detected '
             . $tokens[$stackPtr]['content']
             . '(). Avoid using '
             . $tokens[$stackPtr]['content']
             . '() in production code.';
-        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'FoundFunctionCall');
 
-        if ($fix === false) {
-            return;
-        }
-
-        $phpcsFile->fixer->beginChangeset();
-
-        $lineStart = $phpcsFile
-                ->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true) + 1;
-        $lineEnd = $phpcsFile
-                ->findNext(T_WHITESPACE, $endOfMethod + 1, null, true) - 1;
-
-        for ($i = $lineStart; $i <= $lineEnd; ++$i) {
-            $phpcsFile->fixer->replaceToken($i, '');
-        }
-
-        $phpcsFile->fixer->endChangeset();
+        $phpcsFile->addError($error, $stackPtr, 'FoundFunctionCall');
     }
 }
