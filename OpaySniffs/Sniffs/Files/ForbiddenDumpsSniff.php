@@ -7,7 +7,7 @@ namespace Opay\OpaySniffs\Sniffs\Files;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
-class ForbiddenDumps implements Sniff
+class ForbiddenDumpsSniff implements Sniff
 {
     private array $forbiddenDumps = ['var_dump', 'd', 'dd', 'exit', 'die'];
 
