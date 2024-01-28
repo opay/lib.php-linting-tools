@@ -9,7 +9,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 class ForbiddenCodeSniff implements Sniff
 {
-    // phpcs:ignore OpaySniff.Files.ForbiddenCode
+    // phpcs:ignore OpaySniffs.Files.ForbiddenCode
     public array $forbiddenCode = ['<?=' => '<?php'];
 
     private array $errorsOnLines = [];
