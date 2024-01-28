@@ -9,6 +9,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 class ForbiddenCodeSniff implements Sniff
 {
+    // phpcs:ignore OpaySniff.Files.ForbiddenCode
     public array $forbiddenCode = [
         '<?=' => '<?php',
     ];
@@ -20,6 +21,7 @@ class ForbiddenCodeSniff implements Sniff
         return [T_OPEN_TAG];
     }
 
+    // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
     public function process(File $phpcsFile, $stackPtr): void
     {
         if (empty($this->forbiddenCode) === true) {
