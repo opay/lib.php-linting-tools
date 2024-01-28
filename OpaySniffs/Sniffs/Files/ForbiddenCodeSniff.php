@@ -22,6 +22,10 @@ class ForbiddenCodeSniff implements Sniff
 
     public function process(File $phpcsFile, $stackPtr): void
     {
+        if (empty($this->forbiddenCode) === true) {
+            return;
+        }
+
         $file = file($phpcsFile->getFilename());
 
         $tokens = $phpcsFile->getTokens();
