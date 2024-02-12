@@ -37,8 +37,8 @@ class ForbiddenCodeSniff implements Sniff
 
             foreach ($tokens as $key => $token) {
                 $line = $token['line'] - 1;
-                $lineContent = $file[$line];
-                if (str_contains($lineContent, $forbiddenCode) === false) {
+                $lineContent = $file[$line] ?? null;
+                if ($lineContent === null || str_contains($lineContent, $forbiddenCode) === false) {
                     continue;
                 }
 
