@@ -172,9 +172,8 @@
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
     <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
+    <rule ref="SlevomatCodingStandard.TypeHints.DNFTypeHintFormat">
         <properties>
-            <property name="withSpaces" value="no"/>
             <property name="shortNullable" value="no"/>
             <property name="nullPosition" value="last"/>
         </properties>
@@ -183,14 +182,4 @@
     <rule ref="SlevomatCodingStandard.Variables.UnusedVariable"/>
     <rule ref="SlevomatCodingStandard.Variables.UselessVariable"/>
     <rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>
-    <rule ref="MoxioSniffs.PHP.DisallowArrayCombinersWithSingleArray"/>
-    <rule ref="MoxioSniffs.PHP.DisallowBareContinueInSwitch"/>
-    <rule ref="MoxioSniffs.PHP.DisallowDateTime"/>
-    <rule ref="MoxioSniffs.PHP.DisallowImplicitIteratorToArrayWithUseKeys"/>
-    <rule ref="MoxioSniffs.PHP.DisallowImplicitLooseBase64Decode"/>
-    <rule ref="MoxioSniffs.PHP.DisallowImplicitLooseComparison"/>
-    <rule ref="MoxioSniffs.PHP.DisallowImplicitMicrotimeAsString"/>
-    <rule ref="MoxioSniffs.PHP.DisallowMbDetectEncoding"/>
-    <rule ref="MoxioSniffs.PHP.DisallowUniqidWithoutMoreEntropy"/>
-    <rule ref="MoxioSniffs.PHP.DisallowUtf8EncodeDecode"/>
 </ruleset>

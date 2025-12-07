@@ -1,0 +1,19 @@
+services:
+  linting_tools:
+    image: ${DOCKER_IMAGE:-php:8.5-fpm-alpine}
+    tty: true
+    user: "1000"
+    restart: "no"
+    ports:
+      - "127.0.0.1:8997:80"
+    volumes:
+      - .:/app
+    working_dir: /app
+    container_name: linting_tools
+    networks:
+      - localstack
+
+networks:
+  localstack:
+    name: localstack
+    external: true
