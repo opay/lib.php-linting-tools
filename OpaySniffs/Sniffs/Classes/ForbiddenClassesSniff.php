@@ -25,7 +25,6 @@ use SlevomatCodingStandard\Helpers\UseStatementHelper;
  */
 class ForbiddenClassesSniff implements Sniff
 {
-
     public const CODE_FORBIDDEN_CLASS = 'ForbiddenClass';
     public const CODE_FORBIDDEN_PARENT_CLASS = 'ForbiddenParentClass';
     public const CODE_FORBIDDEN_INTERFACE = 'ForbiddenInterface';
@@ -77,6 +76,7 @@ class ForbiddenClassesSniff implements Sniff
         return $searchTokens;
     }
 
+    // phpcs:ignore SlevomatCodingStandard.Functions.FunctionLength
     public function process(File $phpcsFile, int $tokenPointer): void
     {
         $tokens = $phpcsFile->getTokens();
@@ -127,6 +127,7 @@ class ForbiddenClassesSniff implements Sniff
         }
     }
 
+    // phpcs:ignore SlevomatCodingStandard.Functions.FunctionLength
     private function checkReferences(
         File $phpcsFile,
         int $tokenPointer,
@@ -203,6 +204,7 @@ class ForbiddenClassesSniff implements Sniff
                 $reference['pointer'],
                 $code,
             );
+
             if (!$fix) {
                 continue;
             }
@@ -247,6 +249,7 @@ class ForbiddenClassesSniff implements Sniff
 
             if (in_array($tokens[$referencePointer]['code'], TokenHelper::CLASS_KEYWORD_CODES, true)) {
                 $startPointer = $referencePointer + 1;
+
                 continue;
             }
 
@@ -282,9 +285,9 @@ class ForbiddenClassesSniff implements Sniff
         return $forbiddenClasses;
     }
 
-    private static function normalizeClassName(?string $typeName): ?string
+    private static function normalizeClassName(string|null $typeName): string|null
     {
-        if ($typeName === null || strlen($typeName) === 0 || strtolower($typeName) === 'null') {
+        if ($typeName === null || $typeName === '' || strtolower($typeName) === 'null') {
             return null;
         }
 
@@ -295,7 +298,7 @@ class ForbiddenClassesSniff implements Sniff
     {
         $alternativesString = str_replace(' ', '', $alternativesString);
         $alternatives = explode(',', $alternativesString);
-        $alternatives = array_map(static fn($alt) => self::normalizeClassName($alt), array_filter($alternatives));
+        $alternatives = array_map(static fn ($alt) => self::normalizeClassName($alt), array_filter($alternatives));
 
         return array_merge([''], $alternatives);
     }
