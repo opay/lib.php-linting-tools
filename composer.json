@@ -12,10 +12,9 @@
     }],
     "require": {
         "php": "^8.0",
-        "friendsofphp/php-cs-fixer": "^3.75",
-        "moxio/php-codesniffer-sniffs": "^2.6",
-        "slevomat/coding-standard": "^8.15",
-        "squizlabs/php_codesniffer": "^3.7"
+        "friendsofphp/php-cs-fixer": "^3.91",
+        "slevomat/coding-standard": "^8.25",
+        "squizlabs/php_codesniffer": "^4.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"
