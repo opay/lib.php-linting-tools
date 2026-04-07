@@ -9,8 +9,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 class RedundantEmptyLinesSniff implements Sniff
 {
-    private array $errorsOnLines = [];
-
     public function register(): array
     {
         return [T_OPEN_TAG];
@@ -22,6 +20,7 @@ class RedundantEmptyLinesSniff implements Sniff
         $file = file($phpcsFile->getFilename());
 
         $lastLineContent = null;
+        $errorsOnLines = [];
 
         $tokens = $phpcsFile->getTokens();
         foreach ($tokens as $key => $token) {
@@ -38,12 +37,12 @@ class RedundantEmptyLinesSniff implements Sniff
                 continue;
             }
 
-            if ($token['column'] !== 1 || array_key_exists($line, $this->errorsOnLines)) {
+            if ($token['column'] !== 1 || array_key_exists($line, $errorsOnLines)) {
                 continue;
             }
 
             if (empty($content) && empty($lastLineContent)) {
-                $this->errorsOnLines[$line] = true;
+                $errorsOnLines[$line] = true;
 
                 $phpcsFile->addError(
                     'Redundant empty line found.',
