@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Opay\OpaySniffs\Sniffs\Classes;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+
 class CollectionNotNullSniff implements Sniff
 {
     protected array $collectionClasses = [
@@ -23,7 +24,7 @@ class CollectionNotNullSniff implements Sniff
         ];
     }
 
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -34,27 +35,36 @@ class CollectionNotNullSniff implements Sniff
 
     protected function processTypedProperty(File $phpcsFile, int $stackPtr): void
     {
-        // 1. Locate property visibility (public, protected, private)
         $visibilityPtr = $phpcsFile->findPrevious([T_PUBLIC, T_PROTECTED, T_PRIVATE], $stackPtr - 1);
         if ($visibilityPtr === false) {
             return;
         }
 
-        // 2. Ignore standard method parameters (where a function keyword sits between visibility and variable)
         $functionPtr = $phpcsFile->findPrevious(T_FUNCTION, $stackPtr - 1, $visibilityPtr);
         if ($functionPtr !== false) {
             return;
         }
 
         $tokens = $phpcsFile->getTokens();
-        $typeString = '';
         $nullablePtr = false;
+        $typeString = $this->getTypeString($visibilityPtr, $stackPtr, $nullablePtr, $tokens);
 
-        // 3. Build complete type string between visibility modifier and variable name
+
+        if (empty($typeString)) {
+            return;
+        }
+
+        $this->validateQuestionSymbol($phpcsFile, $stackPtr, $nullablePtr, $typeString);
+        $this->validateTypedNull($phpcsFile, $stackPtr, $typeString);
+    }
+
+    private function getTypeString(int $visibilityPtr, int $stackPtr, int|false &$nullablePtr, array $tokens): string
+    {
+        $typeString = '';
+
         for ($i = $visibilityPtr + 1; $i < $stackPtr; $i++) {
             $code = $tokens[$i]['code'];
 
-            // Skip whitespace, comments, and modifiers like readonly / static
             if (in_array($code, [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, T_STATIC, T_READONLY], true)) {
                 continue;
             }
@@ -66,12 +76,11 @@ class CollectionNotNullSniff implements Sniff
             $typeString .= $tokens[$i]['content'];
         }
 
-        $typeString = trim($typeString);
+        return trim($typeString);
+    }
 
-        if (empty($typeString)) {
-            return;
-        }
-
+    private function validateQuestionSymbol(File $phpcsFile, int $stackPtr, int|false $nullablePtr, string $typeString): void
+    {
         if ($nullablePtr !== false || str_starts_with($typeString, '?')) {
             $typeName = ltrim(substr($typeString, 1), '\\');
             if ($this->isCollectionType($typeName)) {
@@ -79,7 +88,10 @@ class CollectionNotNullSniff implements Sniff
                 return;
             }
         }
+    }
 
+    private function validateTypedNull(File $phpcsFile, int $stackPtr, string $typeString): void
+    {
         if (str_contains($typeString, '|')) {
             $types = explode('|', $typeString);
 
