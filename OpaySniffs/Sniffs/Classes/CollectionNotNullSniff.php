@@ -28,9 +28,11 @@ class CollectionNotNullSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
-            $this->processTypedProperty($phpcsFile, $stackPtr);
+        if ($tokens[$stackPtr]['code'] !== T_VARIABLE) {
+            return;
         }
+
+        $this->processTypedProperty($phpcsFile, $stackPtr);
     }
 
     protected function processTypedProperty(File $phpcsFile, int $stackPtr): void
@@ -48,7 +50,6 @@ class CollectionNotNullSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         $nullablePtr = false;
         $typeString = $this->getTypeString($visibilityPtr, $stackPtr, $nullablePtr, $tokens);
-
 
         if (empty($typeString)) {
             return;
@@ -79,37 +80,45 @@ class CollectionNotNullSniff implements Sniff
         return trim($typeString);
     }
 
-    private function validateQuestionSymbol(File $phpcsFile, int $stackPtr, int|false $nullablePtr, string $typeString): void
-    {
-        if ($nullablePtr !== false || str_starts_with($typeString, '?')) {
-            $typeName = ltrim(substr($typeString, 1), '\\');
-            if ($this->isCollectionType($typeName)) {
-                $this->addError($phpcsFile, $stackPtr, 'NullablePrefixFound', $typeString);
-                return;
-            }
+    private function validateQuestionSymbol(
+        File $phpcsFile,
+        int $stackPtr,
+        int|false $nullablePtr,
+        string $typeString
+    ): void {
+        if ($nullablePtr === false && str_starts_with($typeString, '?') === false) {
+            return;
+        }
+
+        $typeName = ltrim(substr($typeString, 1), '\\');
+        if ($this->isCollectionType($typeName)) {
+            $this->addError($phpcsFile, $stackPtr, 'NullablePrefixFound', $typeString);
         }
     }
 
     private function validateTypedNull(File $phpcsFile, int $stackPtr, string $typeString): void
     {
-        if (str_contains($typeString, '|')) {
-            $types = explode('|', $typeString);
+        if (str_contains($typeString, '|') === false) {
+            return;
+        }
+        $types = explode('|', $typeString);
 
-            $hasNull = false;
-            foreach ($types as $t) {
-                if (strtolower(trim($t)) === 'null') {
-                    $hasNull = true;
-                    break;
-                }
+        $hasNull = false;
+        foreach ($types as $t) {
+            if (strtolower(trim($t)) === 'null') {
+                $hasNull = true;
+
+                break;
             }
+        }
 
-            if ($hasNull) {
-                foreach ($types as $type) {
-                    $cleanType = ltrim(trim($type), '\\');
-                    if ($this->isCollectionType($cleanType)) {
-                        $this->addError($phpcsFile, $stackPtr, 'UnionNullFound', $typeString);
-                        break;
-                    }
+        if ($hasNull) {
+            foreach ($types as $type) {
+                $cleanType = ltrim(trim($type), '\\');
+                if ($this->isCollectionType($cleanType)) {
+                    $this->addError($phpcsFile, $stackPtr, 'UnionNullFound', $typeString);
+
+                    break;
                 }
             }
         }
@@ -129,7 +138,7 @@ class CollectionNotNullSniff implements Sniff
     private function addError(File $phpcsFile, int $stackPtr, string $errorCode, string $propertyName): void
     {
         $error = sprintf(
-            'Property type "%s" is not allowed. Collections should never be nullable; return an empty Collection instead.',
+            'Property type "%s" is not allowed. Return an empty Collection or array instead.',
             $propertyName
         );
         $phpcsFile->addError($error, $stackPtr, $errorCode);
