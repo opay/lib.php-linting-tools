@@ -9,6 +9,7 @@ use PHP_CodeSniffer\Files\File;
 class CollectionNotNullSniff implements Sniff
 {
     protected array $collectionClasses = [
+        'array',
         'Collection',
         'Illuminate\Support\Collection',
         'Illuminate\Database\Eloquent\Collection',
@@ -33,44 +34,68 @@ class CollectionNotNullSniff implements Sniff
 
     protected function processTypedProperty(File $phpcsFile, int $stackPtr): void
     {
-        $tokens = $phpcsFile->getTokens();
-
-        $varPtr = $phpcsFile->findNext(T_VARIABLE, $stackPtr + 1);
-        if ($varPtr === false) {
+        // 1. Locate property visibility (public, protected, private)
+        $visibilityPtr = $phpcsFile->findPrevious([T_PUBLIC, T_PROTECTED, T_PRIVATE], $stackPtr - 1);
+        if ($visibilityPtr === false) {
             return;
         }
 
-        $nullablePtr = $phpcsFile->findNext(T_NULLABLE, $stackPtr + 1, $varPtr);
-
-        $typeString = '';
-        for ($i = $stackPtr + 1; $i < $varPtr; $i++) {
-            if (in_array($tokens[$i]['code'], [T_STRING, T_NS_SEPARATOR, T_TYPE_UNION, T_NULLABLE], true)) {
-                $typeString .= $tokens[$i]['content'];
-            }
+        // 2. Ignore standard method parameters (where a function keyword sits between visibility and variable)
+        $functionPtr = $phpcsFile->findPrevious(T_FUNCTION, $stackPtr - 1, $visibilityPtr);
+        if ($functionPtr !== false) {
+            return;
         }
+
+        $tokens = $phpcsFile->getTokens();
+        $typeString = '';
+        $nullablePtr = false;
+
+        // 3. Build complete type string between visibility modifier and variable name
+        for ($i = $visibilityPtr + 1; $i < $stackPtr; $i++) {
+            $code = $tokens[$i]['code'];
+
+            // Skip whitespace, comments, and modifiers like readonly / static
+            if (in_array($code, [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, T_STATIC, T_READONLY], true)) {
+                continue;
+            }
+
+            if ($code === T_NULLABLE) {
+                $nullablePtr = $i;
+            }
+
+            $typeString .= $tokens[$i]['content'];
+        }
+
+        $typeString = trim($typeString);
 
         if (empty($typeString)) {
             return;
         }
 
-        // Check 1: Short nullable format (?Collection)
-        if ($nullablePtr !== false) {
+        if ($nullablePtr !== false || str_starts_with($typeString, '?')) {
             $typeName = ltrim(substr($typeString, 1), '\\');
             if ($this->isCollectionType($typeName)) {
-                $this->addError($phpcsFile, $stackPtr,'NullablePrefixFound', $typeName);
+                $this->addError($phpcsFile, $stackPtr, 'NullablePrefixFound', $typeString);
+                return;
             }
         }
 
-        // Check 2: PHP 8.0+ Union type (Collection|null or null|Collection)
         if (str_contains($typeString, '|')) {
             $types = explode('|', $typeString);
-            $hasNull = in_array('null', array_map('strtolower', $types), true);
+
+            $hasNull = false;
+            foreach ($types as $t) {
+                if (strtolower(trim($t)) === 'null') {
+                    $hasNull = true;
+                    break;
+                }
+            }
 
             if ($hasNull) {
                 foreach ($types as $type) {
-                    $cleanType = ltrim($type, '\\');
+                    $cleanType = ltrim(trim($type), '\\');
                     if ($this->isCollectionType($cleanType)) {
-                        $this->addError($phpcsFile, $stackPtr,'UnionNullFound', $typeString);
+                        $this->addError($phpcsFile, $stackPtr, 'UnionNullFound', $typeString);
                         break;
                     }
                 }
@@ -92,7 +117,7 @@ class CollectionNotNullSniff implements Sniff
     private function addError(File $phpcsFile, int $stackPtr, string $errorCode, string $propertyName): void
     {
         $error = sprintf(
-            'Property type "?%s" is not allowed. Collections should never be nullable; return an empty Collection instead.',
+            'Property type "%s" is not allowed. Collections should never be nullable; return an empty Collection instead.',
             $propertyName
         );
         $phpcsFile->addError($error, $stackPtr, $errorCode);
