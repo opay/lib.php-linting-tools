@@ -91,9 +91,12 @@ class CollectionNotNullSniff implements Sniff
         }
 
         $typeName = ltrim(substr($typeString, 1), '\\');
-        if ($this->isCollectionType($typeName)) {
-            $this->addError($phpcsFile, $stackPtr, 'NullablePrefixFound', $typeString);
+
+        if ($this->isCollectionType($typeName) === false) {
+            return;
         }
+
+        $this->addError($phpcsFile, $stackPtr, 'NullablePrefixFound', $typeString);
     }
 
     private function validateTypedNull(File $phpcsFile, int $stackPtr, string $typeString): void
@@ -112,14 +115,16 @@ class CollectionNotNullSniff implements Sniff
             }
         }
 
-        if ($hasNull) {
-            foreach ($types as $type) {
-                $cleanType = ltrim(trim($type), '\\');
-                if ($this->isCollectionType($cleanType)) {
-                    $this->addError($phpcsFile, $stackPtr, 'UnionNullFound', $typeString);
+        if ($hasNull === false) {
+            return;
+        }
 
-                    break;
-                }
+        foreach ($types as $type) {
+            $cleanType = ltrim(trim($type), '\\');
+            if ($this->isCollectionType($cleanType)) {
+                $this->addError($phpcsFile, $stackPtr, 'UnionNullFound', $typeString);
+
+                break;
             }
         }
     }
