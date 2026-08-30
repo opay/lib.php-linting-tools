@@ -10,7 +10,7 @@ The main point of this tools set is to ensure developers write <a target="_blank
 Package content
 ---------------
 - <a target="_blank" href="https://github.com/FriendsOfPHP/PHP-CS-Fixer">friendsofphp/php-cs-fixer</a> - Powerful PHP Coding Standards tool
-- <a target="_blank" href="https://github.com/squizlabs/PHP_CodeSniffer">squizlabs/php_codesniffer</a> - Another powerful and customizable PHP Coding Standards tool
+- <a target="_blank" href="https://github.com/PHPCSStandards/PHP_CodeSniffer">squizlabs/php_codesniffer</a> - Another powerful and customizable PHP Coding Standards tool
 - <a target="_blank" href="https://github.com/slevomat/coding-standard">slevomat/coding-standard</a> - Set of additional linting rules for PHP CodeSniffer
 - Custom Opay linting rules for PHP CodeSniffer
 
